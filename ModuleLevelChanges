@@ -1,0 +1,9 @@
+1.  Added "return False" to line no. 426 in Backtrader\feed.py
+    - to avoid ERROR: __len__() should return >= 0 on liveFeed
+    - reference : https://community.backtrader.com/topic/1367/error-__len__-should-return-0-on-livefeed
+
+
+2.  Replace line no. 1190 in Backtrader\stores\ibstore.py
+    - to avoid ValueError: day is out of range for month
+    -   PREV ->  # return dt.replace(year=dt.year + years, month=month + 1)
+        NEW  ->  return dt.replace(year=dt.year + years, month=month + 1, day=1) + timedelta(dt.day - 1)
