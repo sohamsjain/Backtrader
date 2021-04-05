@@ -2,7 +2,7 @@ from queue import Queue
 from threading import Thread
 from time import sleep
 
-from Grid.xone import Xone
+from grid.xone import Xone
 from mygoogle.sprint import *
 
 FILENAME = 'Xones'

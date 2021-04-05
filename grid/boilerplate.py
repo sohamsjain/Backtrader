@@ -5,8 +5,8 @@ from collections import OrderedDict
 
 import backtrader as bt
 
-from Grid.mysizer import MySizer
-from Grid.xone import *
+from grid.mysizer import MySizer
+from grid.xone import *
 from nifty50list import NIFTY50LIST
 from sheets import Sheets
 
