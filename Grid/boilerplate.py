@@ -174,5 +174,3 @@ if __name__ == '__main__':
     cerebro.addstrategy(Grid)
     cerebro.addsizer(MySizer)
     cerebro.run()
-
-# ALERT: Your account, while currently margin compliant, maintains qualifying equity (i.e., Equity with Loan Value) at a level only 10% above that which is required. Please note that we do not issue margin calls and should this cushion erode and your account no longer remain margin compliant, it will be subject to forced position liquidations. To ensure continued compliance, please consider depositing additional funds to increase equity and/or closing or hedging positions to lessen margin exposure. Further note that funds in transit or subject to a credit hold are not considered when liquidating positions.
