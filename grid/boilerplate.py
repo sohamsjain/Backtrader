@@ -2,6 +2,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from collections import OrderedDict
+from typing import Dict
 
 import backtrader as bt
 
@@ -11,6 +12,8 @@ from nifty50list import NIFTY50LIST
 from sheets import Sheets
 
 googlesheet = Sheets()
+
+XoneDict = Dict[str, Xone]
 
 
 class Grid(bt.Strategy):
@@ -25,9 +28,9 @@ class Grid(bt.Strategy):
     def __init__(self):
         self.order = None
         self.orders = {data: None for data in self.datas}
-        self.pxones = OrderedDict({d['symbol']: Xone(**d) for d in self.p.pending})
-        self.oxones = OrderedDict({d['symbol']: Xone(**d) for d in self.p.open})
-        self.cxones = OrderedDict({d['symbol']: Xone(**d) for d in self.p.closed})
+        self.pxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.pending})
+        self.oxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.open})
+        self.cxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.closed})
         self.allx = dict(p=self.pxones, o=self.oxones, c=self.cxones)
         self.alivex = {**self.pxones, **self.oxones}
         self.openordercount = 0
@@ -38,10 +41,10 @@ class Grid(bt.Strategy):
             return
 
         data = order.p.data
-        stk = data._dataname
+        stk: str = data._dataname
 
         try:
-            x = self.alivex[stk]
+            x: Xone = self.alivex[stk]
         except KeyError as k:
             print(k)
             return
@@ -50,36 +53,36 @@ class Grid(bt.Strategy):
             if order.isbuy():
                 if x.islong:
                     self.openordercount -= 1
-                    x.setstatus(ENTRY)
+                    x.setstate(ENTRY)
                     x.setsize(order.size)
                     self.p2o(x)
                 else:
-                    x.setstatus(x.nextstatus)
+                    x.setstate(x.nextstate)
                     self.o2c(x)
             else:
                 if x.islong:
-                    x.setstatus(x.nextstatus)
+                    x.setstate(x.nextstate)
                     self.o2c(x)
                 else:
                     self.openordercount -= 1
-                    x.setstatus(ENTRY)
+                    x.setstate(ENTRY)
                     x.setsize(order.size)
                     self.p2o(x)
 
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             if order.status == order.Canceled:
-                x.status = CANCELLED
+                x.state = CANCELLED
             elif order.status == order.Margin:
-                x.status = MARGIN
+                x.state = MARGIN
             else:
-                x.status = REJECTED
+                x.state = REJECTED
             self.p2c(x)
 
         self.orders[data] = None
 
     def next(self):
         for data in self.datas:
-            stk = data._dataname
+            stk: str = data._dataname
 
             if stk not in self.alivex:
                 continue
@@ -87,55 +90,55 @@ class Grid(bt.Strategy):
             if self.orders[data]:
                 continue
 
-            x = self.alivex[stk]
+            x: Xone = self.alivex[stk]
 
-            if x.status == PENDING:
+            if x.state == PENDING:
                 if x.islong:
                     if x.entryhit and data.high[0] >= x.target:
-                        x.setstatus(MISSED)
+                        x.setstate(MISSED)
                         self.p2c(x)
                         continue
                     if data.low[0] < x.stoploss:
-                        x.setstatus(FAILED)
+                        x.setstate(FAILED)
                         self.p2c(x)
                         continue
                     if data.low[0] <= x.entry:
-                        x.entryhit = True
+                        x.entryhit = 1
                         if (len(self.oxones) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.buy(data=data)
                             self.openordercount += 1
 
                 else:
                     if x.entryhit and data.low[0] <= x.target:
-                        x.setstatus(MISSED)
+                        x.setstate(MISSED)
                         self.p2c(x)
                         continue
                     if data.high[0] > x.stoploss:
-                        x.setstatus(FAILED)
+                        x.setstate(FAILED)
                         self.p2c(x)
                         continue
                     if data.high[0] >= x.entry:
-                        x.entryhit = True
+                        x.entryhit = 1
                         if (len(self.oxones) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.sell(data=data)
                             self.openordercount += 1
 
-            elif x.status == ENTRY:
+            elif x.state == ENTRY:
 
                 if x.islong:
                     if data.low[0] < x.stoploss:
                         self.orders[data] = self.close(data=data)
-                        x.nextstatus = STOPLOSS
+                        x.nextstate = STOPLOSS
                     elif data.high[0] >= x.target:
                         self.orders[data] = self.close(data=data)
-                        x.nextstatus = TARGET
+                        x.nextstate = TARGET
                 else:
                     if data.high[0] > x.stoploss:
                         self.orders[data] = self.close(data=data)
-                        x.nextstatus = STOPLOSS
+                        x.nextstate = STOPLOSS
                     elif data.low[0] <= x.target:
                         self.orders[data] = self.close(data=data)
-                        x.nextstatus = TARGET
+                        x.nextstate = TARGET
 
             else:
                 continue
