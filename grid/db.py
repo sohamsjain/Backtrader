@@ -1,10 +1,10 @@
-import sqlite3
 from queue import Queue
 from threading import Thread
 from time import sleep
-from typing import List
+from typing import List, Dict
 
 import pandas as pd
+from sqlalchemy import create_engine
 
 from grid.util import *
 from grid.xone import Xone
@@ -21,16 +21,16 @@ class Db(GoogleSprint):
 
     def __init__(self):
         super().__init__()
-        self.engine = sqlite3.connect(f'{FILENAME}.db', check_same_thread=False)
+        self.engine = create_engine(f'sqlite:///{FILENAME}.db', echo=False)
         self.spread = self.gs.open(FILENAME)
         self.sheets = AutoOrderedDict()
-        self.sheets.pending = self.spread.worksheet(pending)
-        self.sheets.open = self.spread.worksheet(_open)
-        self.sheets.closed = self.spread.worksheet(closed)
+        self.sheets.pending = self.spread.worksheet(pending.capitalize())
+        self.sheets.open = self.spread.worksheet(_open.capitalize())
+        self.sheets.closed = self.spread.worksheet(closed.capitalize())
+        self.emptydf = pd.DataFrame(columns=Xone.attrs)
         self.pending: ListOfDict = pd.read_sql_table(pending, self.engine).to_dict(orient='records')
         self.open: ListOfDict = pd.read_sql_table(_open, self.engine).to_dict(orient='records')
         self.closed: ListOfDict = pd.read_sql_table(closed, self.engine).to_dict(orient='records')
-        self.emptydf = pd.DataFrame(columns=Xone.attrs)
         self.q = Queue()
         self.gsq = Queue()
         self.dbupdater = Thread(target=self.update_db, daemon=True).start()
@@ -58,10 +58,10 @@ class Db(GoogleSprint):
 
     def update_gs(self):
         while True:
-            xone_dfs = self.gsq.get()
+            xone_dfs: Dict[str, pd.DataFrame] = self.gsq.get()
             while not self.gsq.empty():
-                xone_dfs = self.gsq.get()
+                xone_dfs: Dict[str, pd.DataFrame] = self.gsq.get()
             for xtype, xdf in xone_dfs.items():
-                self.sheets[xtype].clear()
-                self.update_sheet(self.sheets[xtype], xdf)
+                self.sheets[xtype.capitalize()].clear()
+                self.update_sheet(self.sheets[xtype.capitalize()], xdf)
             sleep(6)
