@@ -1,38 +1,33 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from collections import OrderedDict
 from typing import Dict
 
 import backtrader as bt
 
+from grid.db import Db
 from grid.mysizer import MySizer
+from grid.nifty50list import NIFTY50LIST
+from grid.util import *
 from grid.xone import *
-from nifty50list import NIFTY50LIST
-from sheets import Sheets
-
-googlesheet = Sheets()
 
 XoneDict = Dict[str, Xone]
 
 
 class Grid(bt.Strategy):
     params = (
-        ('gsheet', googlesheet),
-        ('pending', googlesheet.pxones),
-        ('open', googlesheet.oxones),
-        ('closed', googlesheet.cxones),
         ('maxpos', 5)
     )
 
     def __init__(self):
+        self.db = Db()
         self.order = None
         self.orders = {data: None for data in self.datas}
-        self.pxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.pending})
-        self.oxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.open})
-        self.cxones: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.p.closed})
-        self.allx = dict(p=self.pxones, o=self.oxones, c=self.cxones)
-        self.alivex = {**self.pxones, **self.oxones}
+        self.pending: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.pending})
+        self.open: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.open})
+        self.closed: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.closed})
+        self.all = dict(pending=self.pending, open=self.open, closed=self.closed)
+        self.alive = {**self.pending, **self.open}
         self.openordercount = 0
 
     def notify_order(self, order):
@@ -44,7 +39,7 @@ class Grid(bt.Strategy):
         stk: str = data._dataname
 
         try:
-            x: Xone = self.alivex[stk]
+            x: Xone = self.alive[stk]
         except KeyError as k:
             print(k)
             return
@@ -84,13 +79,13 @@ class Grid(bt.Strategy):
         for data in self.datas:
             stk: str = data._dataname
 
-            if stk not in self.alivex:
+            if stk not in self.alive:
                 continue
 
             if self.orders[data]:
                 continue
 
-            x: Xone = self.alivex[stk]
+            x: Xone = self.alive[stk]
 
             if x.state == PENDING:
                 if x.islong:
@@ -104,7 +99,7 @@ class Grid(bt.Strategy):
                         continue
                     if data.low[0] <= x.entry:
                         x.entryhit = 1
-                        if (len(self.oxones) + self.openordercount) < self.p.maxpos:
+                        if (len(self.open) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.buy(data=data)
                             self.openordercount += 1
 
@@ -119,7 +114,7 @@ class Grid(bt.Strategy):
                         continue
                     if data.high[0] >= x.entry:
                         x.entryhit = 1
-                        if (len(self.oxones) + self.openordercount) < self.p.maxpos:
+                        if (len(self.open) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.sell(data=data)
                             self.openordercount += 1
 
@@ -144,21 +139,21 @@ class Grid(bt.Strategy):
                 continue
 
     def p2c(self, x):
-        self.alivex.pop(x.symbol)
-        self.pxones.pop(x.symbol)
-        self.cxones.update({x.symbol: x})
-        self.p.gsheet.queue.put(self.allx.copy())
+        self.alive.pop(x.symbol)
+        self.pending.pop(x.symbol)
+        self.closed.update({x.symbol: x})
+        self.db.q.put(self.all.copy())
 
     def p2o(self, x):
-        self.pxones.pop(x.symbol)
-        self.oxones.update({x.symbol: x})
-        self.p.gsheet.queue.put(self.allx.copy())
+        self.pending.pop(x.symbol)
+        self.open.update({x.symbol: x})
+        self.db.q.put(self.all.copy())
 
     def o2c(self, x):
-        self.alivex.pop(x.symbol)
-        self.oxones.pop(x.symbol)
-        self.cxones.update({x.symbol: x})
-        self.p.gsheet.queue.put(self.allx.copy())
+        self.alive.pop(x.symbol)
+        self.open.pop(x.symbol)
+        self.closed.update({x.symbol: x})
+        self.db.q.put(self.all.copy())
 
 
 if __name__ == '__main__':
