@@ -36,8 +36,12 @@ class Xone:
     def getvalues(self):
         return {k: v for k, v in self.__dict__.items() if k in Xone.attrs}
 
+    def __hash__(self):
+        return hash(tuple(self.getvalues().values()))
 
-def create(**kwargs):
+
+def create_xone(kwargs: dict):
+    kwargs = {key: val for key, val in kwargs.items() if val != ''}
     try:
         for attr in ["symbol", "entry", "stoploss"]:
             assert attr in kwargs, f"Missing Xone Attribute: {attr}"
@@ -66,8 +70,14 @@ def create(**kwargs):
             assert isinstance(state, int), "state must be an integer"
             assert state in range(lengthOfStatuses), f"state must be in range({lengthOfStatuses})"
 
-        entryhit = kwargs.get('entryhit', 0)
-        assert entryhit in (1, 0), "entryhit not in (1, 0)"
+        entryhit = kwargs.get('entryhit', False)
+        if entryhit is not False:
+            if entryhit.lower() == 'true':
+                entryhit = True
+            elif entryhit.lower() == 'false':
+                entryhit = False
+            else:
+                raise ValueError('entryhit attr has an ambiguous value. Must be True or False')
 
         x = Xone(symbol=symbol,
                  entry=entry,
@@ -78,6 +88,5 @@ def create(**kwargs):
                  entryhit=entryhit)
 
         return x
-    except AssertionError as ae:
-        print(ae)
-        return False
+    except (AssertionError, ValueError) as ae:
+        return ae
