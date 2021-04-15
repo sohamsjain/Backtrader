@@ -1,33 +1,23 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from typing import Dict
-
 import backtrader as bt
 
-from grid.db import Db
 from grid.mysizer import MySizer
 from grid.nifty50list import NIFTY50LIST
-from grid.util import *
 from grid.xone import *
-
-XoneDict = Dict[str, Xone]
 
 
 class Grid(bt.Strategy):
     params = (
-        ('maxpos', 5)
+        ('maxpos', 5),
+        ('manager', None)
     )
 
     def __init__(self):
-        self.db = Db()
+        self.manager = self.p.manager
         self.order = None
         self.orders = {data: None for data in self.datas}
-        self.pending: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.pending})
-        self.open: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.open})
-        self.closed: XoneDict = OrderedDict({d['symbol']: Xone(**d) for d in self.db.closed})
-        self.all = dict(pending=self.pending, open=self.open, closed=self.closed)
-        self.alive = {**self.pending, **self.open}
         self.openordercount = 0
 
     def notify_order(self, order):
@@ -39,39 +29,39 @@ class Grid(bt.Strategy):
         stk: str = data._dataname
 
         try:
-            x: Xone = self.alive[stk]
+            xone: Xone = self.manager.alive[stk]
         except KeyError as k:
             print(k)
             return
 
         if order.status in [order.Completed]:
             if order.isbuy():
-                if x.islong:
+                if xone.islong:
                     self.openordercount -= 1
-                    x.setstate(ENTRY)
-                    x.setsize(order.size)
-                    self.p2o(x)
+                    xone.setstate(ENTRY)
+                    xone.setsize(order.size)
+                    self.manager.p2o(xone)
                 else:
-                    x.setstate(x.nextstate)
-                    self.o2c(x)
+                    xone.setstate(xone.nextstate)
+                    self.manager.o2c(xone)
             else:
-                if x.islong:
-                    x.setstate(x.nextstate)
-                    self.o2c(x)
+                if xone.islong:
+                    xone.setstate(xone.nextstate)
+                    self.manager.o2c(xone)
                 else:
                     self.openordercount -= 1
-                    x.setstate(ENTRY)
-                    x.setsize(order.size)
-                    self.p2o(x)
+                    xone.setstate(ENTRY)
+                    xone.setsize(order.size)
+                    self.manager.p2o(xone)
 
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             if order.status == order.Canceled:
-                x.state = CANCELLED
+                xone.state = CANCELLED
             elif order.status == order.Margin:
-                x.state = MARGIN
+                xone.state = MARGIN
             else:
-                x.state = REJECTED
-            self.p2c(x)
+                xone.state = REJECTED
+            self.manager.p2c(xone)
 
         self.orders[data] = None
 
@@ -79,23 +69,23 @@ class Grid(bt.Strategy):
         for data in self.datas:
             stk: str = data._dataname
 
-            if stk not in self.alive:
+            if stk not in self.manager.alive:
                 continue
 
             if self.orders[data]:
                 continue
 
-            x: Xone = self.alive[stk]
+            x: Xone = self.manager.alive[stk]
 
             if x.state == PENDING:
                 if x.islong:
                     if x.entryhit and data.high[0] >= x.target:
                         x.setstate(MISSED)
-                        self.p2c(x)
+                        self.manager.p2c(x)
                         continue
                     if data.low[0] < x.stoploss:
                         x.setstate(FAILED)
-                        self.p2c(x)
+                        self.manager.p2c(x)
                         continue
                     if data.low[0] <= x.entry:
                         x.entryhit = 1
@@ -106,11 +96,11 @@ class Grid(bt.Strategy):
                 else:
                     if x.entryhit and data.low[0] <= x.target:
                         x.setstate(MISSED)
-                        self.p2c(x)
+                        self.manager.p2c(x)
                         continue
                     if data.high[0] > x.stoploss:
                         x.setstate(FAILED)
-                        self.p2c(x)
+                        self.manager.p2c(x)
                         continue
                     if data.high[0] >= x.entry:
                         x.entryhit = 1
@@ -138,34 +128,17 @@ class Grid(bt.Strategy):
             else:
                 continue
 
-    def p2c(self, x):
-        self.alive.pop(x.symbol)
-        self.pending.pop(x.symbol)
-        self.closed.update({x.symbol: x})
-        self.db.q.put(self.all.copy())
-
-    def p2o(self, x):
-        self.pending.pop(x.symbol)
-        self.open.update({x.symbol: x})
-        self.db.q.put(self.all.copy())
-
-    def o2c(self, x):
-        self.alive.pop(x.symbol)
-        self.open.pop(x.symbol)
-        self.closed.update({x.symbol: x})
-        self.db.q.put(self.all.copy())
-
 
 if __name__ == '__main__':
     cerebro = bt.Cerebro()
-    store = bt.stores.IBStore(host="", port=7497, _debug=False)
+    store = bt.stores.IBStore(port=7497, _debug=False)
 
     # datas = [store.getdata(dataname=stk, historical=True,
     #                        fromdate=datetime.now().date()) for stk in NIFTY50LIST]
 
     datas = [store.getdata(dataname=stk, rtbar=True, backfill_start=False) for stk in NIFTY50LIST]
-    for data in datas:
-        cerebro.resampledata(data, timeframe=bt.TimeFrame.Seconds, compression=5)
+    for d in datas:
+        cerebro.resampledata(d, timeframe=bt.TimeFrame.Seconds, compression=5)
 
     cerebro.setbroker(store.getbroker())
     # cerebro.broker.setcash(100000.0)

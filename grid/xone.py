@@ -40,7 +40,7 @@ class Xone:
         return hash(tuple(self.getvalues().values()))
 
 
-def create_xone(kwargs: dict):
+def spawn(kwargs: dict):
     kwargs = {key: val for key, val in kwargs.items() if val != ''}
     try:
         for attr in ["symbol", "entry", "stoploss"]:

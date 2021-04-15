@@ -1,10 +1,13 @@
 from queue import Queue
 from threading import Thread
 from time import sleep
+from typing import Dict
 
-from grid.xone import Xone
+from grid.util import *
 from mygoogle.sprint import *
 
+pending, _open, closed = 'pending', 'open', 'closed'
+xonetypes = {pending, _open, closed}
 FILENAME = 'Xones'
 
 
@@ -13,28 +16,21 @@ class Sheets(GoogleSprint):
     def __init__(self):
         super().__init__()
         self.spread = self.gs.open(FILENAME)
-        self.pxl = self.spread.worksheet('Pending')
-        self.oxl = self.spread.worksheet('Open')
-        self.cxl = self.spread.worksheet('Closed')
-        self.pxones = self.fetch_sheet_values(self.pxl).to_dict(orient='records')
-        self.oxones = self.fetch_sheet_values(self.oxl).to_dict(orient='records')
-        self.cxones = self.fetch_sheet_values(self.cxl).to_dict(orient='records')
-        self.queue = Queue()
-        self.updater = Thread(target=self.update_xones, daemon=True).start()
+        self.sheets = AutoOrderedDict()
+        self.sheets.pending = self.spread.worksheet(pending.capitalize())
+        self.sheets.open = self.spread.worksheet(_open.capitalize())
+        self.sheets.closed = self.spread.worksheet(closed.capitalize())
+        self.q = Queue()
+        self.updater = Thread(target=self.update, daemon=True)
+        self.updater.start()
 
-    def update_xones(self):
+    def update(self):
         while True:
-            xone_dicts = self.queue.get()
-            while not self.queue.empty():
-                xone_dicts = self.queue.get()
-            p, o, c = xone_dicts['p'], xone_dicts['o'], xone_dicts['c']
-            if p:
-                self.pxl.clear()
-                self.update_sheet(self.pxl, pd.DataFrame([x.getvalues() for s, x in p.items()], columns=Xone.attrs))
-            if o:
-                self.oxl.clear()
-                self.update_sheet(self.oxl, pd.DataFrame([x.getvalues() for s, x in o.items()], columns=Xone.attrs))
-            if c:
-                self.cxl.clear()
-                self.update_sheet(self.cxl, pd.DataFrame([x.getvalues() for s, x in c.items()], columns=Xone.attrs))
+            xone_dfs: Dict[str, pd.DataFrame] = self.q.get()
+            while not self.q.empty():
+                xone_dfs: Dict[str, pd.DataFrame] = self.q.get()
+            assert set(xone_dfs.keys()) == xonetypes
+            for xtype, xdf in xone_dfs.items():
+                self.sheets[xtype.capitalize()].clear()
+                self.update_sheet(self.sheets[xtype.capitalize()], xdf)
             sleep(6)
