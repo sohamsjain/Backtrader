@@ -1,5 +1,6 @@
 import logging
 import time
+import traceback
 from os import makedirs
 from os.path import dirname, join, basename
 
@@ -27,3 +28,19 @@ class LogCat:
         logger.addHandler(handler)
 
         return logger
+
+
+class ExecutionReport:
+    def __init__(self, file):
+        self.file = file
+        self.path = dirname(self.file)
+        self.filename: str = str(basename(self.file)).split('.')[0]
+        self.directory = "ExecLogs"
+        self.date = time.strftime("%a %b %d %Y")
+        self.time = time.strftime("%H.%M.%S") + '.txt'
+        self.fullpath = join(self.path, self.directory, self.filename, self.date)
+        makedirs(self.fullpath, exist_ok=True)
+
+    def submit(self, *exc_info):
+        with open(join(self.fullpath, self.time), "w", encoding='utf-8') as f:
+            traceback.print_exception(*exc_info, file=f)

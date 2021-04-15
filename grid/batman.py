@@ -55,6 +55,7 @@ class BaTMan:
                 else:
                     dfs.update({xonetype: self.emptydf})
             self.put(dfs)
+            del dfs
 
     def put(self, dfs):
         self.database.q.put(dfs)
@@ -99,6 +100,7 @@ class BaTMan:
             else:
                 self.pending.update({symbol: xone})
                 self.alive.update({symbol: xone})
+                self.event.set()
         except (AssertionError, ValueError) as e:
             return e
 

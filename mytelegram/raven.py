@@ -10,7 +10,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 raven_token = "1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo"
 raven_json_path = join(dirname(__file__), 'raven.json')
 
-logging.basicConfig(filename='raven.log', level=logging.FATAL, encoding='utf-8')
+logging.basicConfig(filename='raven.log', level=logging.FATAL)
 
 
 def send_typing_action(func):
