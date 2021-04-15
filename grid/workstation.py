@@ -1,6 +1,6 @@
 from queue import Queue
 from socket import socket
-from threading import *
+from threading import Thread
 from time import sleep
 from typing import Dict, Optional
 
