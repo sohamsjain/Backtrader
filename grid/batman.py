@@ -2,14 +2,16 @@ from collections import OrderedDict
 from threading import Event, Thread
 from typing import Dict
 
+import backtrader as bt
 import pandas as pd
 
-from db import Db
+from grid.db import Db
+from grid.mysizer import MySizer
+from grid.sheets import Sheets
+from grid.strategy import Grid
+from grid.workstation import WorkStation
 from grid.xone import *
-from grid.xone import Xone
-from mytelegram.raven import Raven, raven_token, raven_json_path
-from sheets import Sheets
-from workstation import WorkStation
+from mytelegram.raven import Raven, raven_json_path, raven_token
 
 pending, _open, closed = 'pending', 'open', 'closed'
 xonetypes = {pending, _open, closed}
@@ -80,21 +82,44 @@ class BaTMan:
     def spawn_multiple(listofdict: ListOfDict) -> dict:
         dict_to_return = dict()
         for each_dict in listofdict:
-            xone: Optional[Xone] = spawn(each_dict)
-            if isinstance(xone, Xone):
+            try:
+                xone: Optional[Xone] = spawn(each_dict)
                 dict_to_return.update({xone.symbol: xone})
-            else:
+            except (AssertionError, ValueError) as e:
                 # send a raven
-                print(each_dict, xone, sep="\n")
+                print(each_dict, e, sep="\n")
         return dict_to_return
 
     def spawn(self, vals):
-        xone: Optional[Xone] = spawn(vals)
-        if isinstance(xone, Xone):
+        try:
+            xone: Optional[Xone] = spawn(vals)
             symbol = xone.symbol
             if symbol in self.alive:
                 return f"There already exists a xone for symbol {symbol}"
             else:
                 self.pending.update({symbol: xone})
-        else:
-            return xone
+                self.alive.update({symbol: xone})
+        except (AssertionError, ValueError) as e:
+            return e
+
+    def run(self):
+        try:
+            cerebro = bt.Cerebro()
+
+            store = bt.stores.IBStore(port=7497, _debug=False)
+
+            datas = [store.getdata(dataname=stk, rtbar=True, backfill_start=False) for stk in contracts]
+
+            for d in datas:
+                cerebro.resampledata(d, timeframe=bt.TimeFrame.Seconds, compression=5)
+
+            cerebro.setbroker(store.getbroker())
+
+            cerebro.addstrategy(Grid, manager=self)
+
+            cerebro.addsizer(MySizer)
+
+            cerebro.run()
+
+        except Exception as e:
+            print(e)
