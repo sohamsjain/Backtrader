@@ -12,7 +12,7 @@ statuses: List[str] = ["PENDING", "ENTRY", "STOPLOSS", "TARGET", "MISSED", "FAIL
 class Xone:
     attrs = ['symbol', 'entry', 'stoploss', 'target', 'size', 'status', 'entryhit']
 
-    def __init__(self, symbol, entry, stoploss, target=None, status=None, entryhit=0, size=0):
+    def __init__(self, symbol, entry, stoploss, target=None, status=None, entryhit=None, size=0):
         if entry == stoploss:
             raise ValueError("Entry Cannot be equal to Stoploss")
 
@@ -24,7 +24,7 @@ class Xone:
         self.target: float = target or (entry + (2 * self.rpu) if self.islong else entry - (2 * self.rpu))
         self.status: str = status or "PENDING"
         self.state: int = statuses.index(self.status)
-        self.entryhit: int = entryhit or 0
+        self.entryhit: int = entryhit or False
         self.nextstate: Optional[int] = None
         self.size: int = size or 0
 
@@ -49,6 +49,7 @@ def spawn(kwargs: dict):
 
     symbol = kwargs['symbol']
     assert isinstance(symbol, str), "symbol must be a string"
+    symbol = symbol.upper()
     if symbol in contracts:
         pass
     elif symbol in symbols:
@@ -74,14 +75,22 @@ def spawn(kwargs: dict):
 
     status = kwargs.get('status', None)
     if status:
-        assert status in statuses, "state must be an integer"
+        assert status in statuses, f"state must be in {statuses}"
 
-    entryhit = kwargs.get('entryhit', False)
-    if entryhit is not False:
-        if entryhit.lower() == 'true':
-            entryhit = True
-        elif entryhit.lower() == 'false':
-            entryhit = False
+    entryhit = kwargs.get('entryhit', None)
+    if entryhit is not None:
+        if isinstance(entryhit, bool):
+            pass
+        if isinstance(entryhit, str):
+            if entryhit.lower() in ['true', '1']:
+                entryhit = True
+            elif entryhit.lower() in ['false', '0']:
+                entryhit = False
+        if isinstance(entryhit, int):
+            if entryhit == 1:
+                entryhit = True
+            elif entryhit == 0:
+                entryhit = False
         else:
             raise ValueError('entryhit attr has an ambiguous value. Must be True or False')
 
