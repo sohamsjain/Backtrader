@@ -8,6 +8,7 @@ excrep = ExecutionReport(__file__)
 try:
 
     b = BaTMan()
+    b.run()
 
 except Exception as e:
     exc_info = sys.exc_info()

@@ -1,5 +1,4 @@
 from queue import Queue
-from socket import socket
 from threading import Thread
 from time import sleep
 from typing import Dict, Optional
@@ -8,8 +7,16 @@ import pandas as pd
 
 from extsockets import ServerManager
 
-pending, _open, closed = 'pending', 'open', 'closed'
+pending, _open, closed = "pending", "open", "closed"
 xonetypes = {pending, _open, closed}
+
+add_subscription, sub_response = "add subscription", "subscription response"
+xones = "xones"
+spawn, spawn_response = "spawn", "spawn_response"
+
+client, server, meta, data = "client", "server", "meta", "data"
+
+response_template = {"to": client, "from": server, meta: "", data: ""}
 
 
 class WorkStation(ServerManager):
@@ -27,44 +34,40 @@ class WorkStation(ServerManager):
         self.manager = manager
 
     def message_handler(self, client_socket, message):
+        global meta, data
         try:
-            meta = message['meta']
-            data = message['data']
+            rcvd_meta = message[meta]
+            rcvd_data = message[data]
         except KeyError:
             return 0
 
-        if meta.lower() == 'add subscription':
-            if data == 'xones':
+        if rcvd_meta.lower() == add_subscription:
+            if rcvd_data == xones:
                 if client_socket not in self.xone_clients:
                     self.xone_clients.append(client_socket)
-                message = {"to": "client", "from": "server", 'meta': 'subscription response', 'data': 'Loading Xones'}
-                self.send_message(client_socket, message)
+                self.broadcast(meta_=sub_response, data_="Loading Xones", client_list=[client_socket])
                 if self.dict_of_xonesdf:
-                    self.broadcast(self.dict_of_xonesdf, [client_socket])
+                    self.broadcast(meta_=xones, data_=self.dict_of_xonesdf, client_list=[client_socket])
 
-        if meta.lower() == 'create xone':
-            if isinstance(data, dict):
+        if rcvd_meta.lower() == spawn:
+            if isinstance(rcvd_data, dict):
                 if self.manager:
-                    response = self.manager.create_xone(data)
-                    send_back = {"to": "client", "from": "server", "meta": "xone response", "data": response}
-                    self.send_message(client_socket, send_back)
+                    retval = self.manager.spawn(rcvd_data)
+                    self.broadcast(meta_=spawn_response, data_=retval, client_list=[client_socket])
 
-        if meta.lower() == 'exit xone':
-            if isinstance(data, dict):
-                if self.manager:
-                    data = self.manager.exit_xone(data)
-                    send_back = {"to": "client", "from": "server", 'meta': 'exit response', 'data': data}
-                    self.send_message(client_socket, send_back)
+    def close_handler(self, client_socket):
+        if client_socket in self.xone_clients:
+            self.xone_clients.remove(client_socket)
 
-    def close_handler(self, client):
-        if client in self.xone_clients:
-            self.xone_clients.remove(client)
+    def broadcast(self, meta_, data_, client_list=None):
+        global meta, data
+        client_list = self.xone_clients if not client_list else client_list
 
-    def broadcast(self, message, client_list=None):
-        client_list = self.clients if not client_list else client_list
-        client_list = [client_list] if isinstance(client_list, socket) else client_list
-        for client in client_list:
-            self.send_message(client, message)
+        message = response_template.copy()
+        message[meta] = meta_
+        message[data] = data_
+
+        self.send_message(client_list, message)
 
     def update(self):
         while True:
@@ -72,5 +75,5 @@ class WorkStation(ServerManager):
             while not self.q.empty():
                 self.dict_of_xonesdf = self.q.get()
             assert set(self.dict_of_xonesdf.keys()) == xonetypes, f"Xone types != {xonetypes}"
-            self.broadcast(self.dict_of_xonesdf)
+            self.broadcast(meta_=xones, data_=self.dict_of_xonesdf)
             sleep(1)

@@ -63,6 +63,21 @@ class Grid(bt.Strategy):
 
         self.orders[data] = None
 
+    def notify_trade(self, trade):
+        pass
+
+    def notify_data(self, data, status, *args, **kwargs):
+        pass
+
+    def notify_store(self, msg, *args, **kwargs):
+        pass
+
+    def notify_cashvalue(self, cash, value):
+        pass
+
+    def notify_fund(self, cash, value, fundvalue, shares):
+        pass
+
     def next(self):
         for data in self.datas:
             stk: str = data._dataname
@@ -86,8 +101,8 @@ class Grid(bt.Strategy):
                         self.manager.p2c(x)
                         continue
                     if data.low[0] <= x.entry:
-                        x.entryhit = 1
-                        if (len(self.open) + self.openordercount) < self.p.maxpos:
+                        x.entryhit = True
+                        if (len(self.manager.open) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.buy(data=data)
                             self.openordercount += 1
 
@@ -101,8 +116,8 @@ class Grid(bt.Strategy):
                         self.manager.p2c(x)
                         continue
                     if data.high[0] >= x.entry:
-                        x.entryhit = 1
-                        if (len(self.open) + self.openordercount) < self.p.maxpos:
+                        x.entryhit = True
+                        if (len(self.manager.open) + self.openordercount) < self.p.maxpos:
                             self.orders[data] = self.sell(data=data)
                             self.openordercount += 1
 
@@ -126,23 +141,3 @@ class Grid(bt.Strategy):
             else:
                 continue
 
-
-if __name__ == '__main__':
-
-    from mysizers import MySizer
-
-    cerebro = bt.Cerebro()
-    store = bt.stores.IBStore(port=7497, _debug=False)
-
-    # datas = [store.getdata(dataname=stk, historical=True,
-    #                        fromdate=datetime.now().date()) for stk in NIFTY50LIST]
-
-    datas = [store.getdata(dataname=stk, rtbar=True, backfill_start=False) for stk in contracts]
-    for d in datas:
-        cerebro.resampledata(d, timeframe=bt.TimeFrame.Seconds, compression=5)
-
-    cerebro.setbroker(store.getbroker())
-    # cerebro.broker.setcash(100000.0)
-    cerebro.addstrategy(Grid)
-    cerebro.addsizer(MySizer)
-    cerebro.run()

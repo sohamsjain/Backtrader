@@ -13,7 +13,7 @@ class MySizer(bt.Sizer):
 
         value = self.broker.value
         prisk = (self.p.pct_risk / 100) * value
-        x = self.strategy.alivex[data._dataname]
+        x = self.strategy.manager.alive[data._dataname]
         riskqty = abs(int((prisk / x.rpu) / self.p.lot_size)) * self.p.lot_size
 
         if self.p.margin:

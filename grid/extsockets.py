@@ -56,10 +56,13 @@ class ServerManager:
         self.logcat.debug("Added New client to socket list and client list")
 
     def remove_client(self, client):
-        self.sockets.remove(client)
-        self.client_dict.pop(client)
-        self.clients.remove(client)
-        self.logcat.debug("Removed: {}".format(client))
+        try:
+            self.sockets.remove(client)
+            self.client_dict.pop(client)
+            self.clients.remove(client)
+            self.logcat.debug("Removed: {}".format(client))
+        except (ValueError, KeyError):
+            pass
 
     def receive_message(self, socket):
         try:
@@ -101,16 +104,22 @@ class ServerManager:
         message_header = f"{len(message):<{self.HEADER_LENGTH}}".encode('utf-8')
         return message_header + message
 
-    def send_message(self, _socket, message):
+    def send_message(self, _sockets, message):
+
         pickle_message = self.pack_message(message)
         message_length = len(pickle_message)
-        if type(_socket) != list:
-            _socket = [_socket]
-        for sock in _socket:
-            totalsent = 0
-            while totalsent < message_length:
-                sent = sock.send(pickle_message[totalsent:])
-                totalsent = totalsent + sent
+        if isinstance(_sockets, socket.socket):
+            _sockets = [_sockets]
+        for sock in _sockets:
+            try:
+                totalsent = 0
+                while totalsent < message_length:
+                    sent = sock.send(pickle_message[totalsent:])
+                    totalsent = totalsent + sent
+            except IOError as e:
+                if e.errno in [errno.WSAECONNRESET]:
+                    sock.close()
+                    self.remove_client(sock)
 
     def close(self):
         self.server.close()
@@ -220,10 +229,10 @@ class ClientManager:
 
 
         except IOError as e:
+            if e.errno in [errno.WSAECONNRESET, errno.WSAECONNABORTED]:
+                return "Connection Closed"
             if e.errno != errno.EAGAIN and e.errno != errno.EWOULDBLOCK:
                 print('Reading IOError: {}'.format(str(e)))
-            if e.errno == errno.WSAECONNRESET:
-                return "Connection Closed"
             return False
 
     def pack_message(self, message):

@@ -31,6 +31,6 @@ class Sheets(GoogleSprint):
                 xone_dfs: Dict[str, pd.DataFrame] = self.q.get()
             assert set(xone_dfs.keys()) == xonetypes
             for xtype, xdf in xone_dfs.items():
-                self.sheets[xtype.capitalize()].clear()
-                self.update_sheet(self.sheets[xtype.capitalize()], xdf)
+                self.sheets[xtype].clear()
+                self.update_sheet(self.sheets[xtype], xdf)
             sleep(6)

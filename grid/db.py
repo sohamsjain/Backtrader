@@ -53,3 +53,10 @@ class Db:
                 self.to_sql(xdf, xtype)
 
             sleep(3)
+
+
+if __name__ == '__main__':
+    from grid.xone import Xone
+
+    b = Db()
+    b.to_sql(pd.DataFrame(columns=Xone.attrs), pending)

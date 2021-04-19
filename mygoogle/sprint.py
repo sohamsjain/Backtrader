@@ -22,13 +22,14 @@ class GoogleSprint:
         self.drive = GoogleDrive(self.gauth)
         self.files = self.get_files()
 
-    def get_files(self, query=""):
+    def get_files(self, query="", show_files=False):
         if query:
             file_list = self.drive.ListFile({'q': query}).GetList()
         else:
             file_list = self.drive.ListFile().GetList()
-        for file1 in file_list:
-            print('title: {}, id: {}'.format(file1['title'], file1['id']))
+        if show_files:
+            for file1 in file_list:
+                print('title: {}, id: {}'.format(file1['title'], file1['id']))
         return pd.DataFrame(file_list)
 
     def create_folder(self, folder_name, parent_id=None):

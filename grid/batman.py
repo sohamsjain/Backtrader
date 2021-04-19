@@ -1,3 +1,5 @@
+import sys
+import traceback
 from collections import OrderedDict
 from threading import Event, Thread
 from typing import Dict
@@ -43,6 +45,7 @@ class BaTMan:
         self.event = Event()
         self.updater = Thread(target=self.update, daemon=True)
         self.updater.start()
+        self.event.set()
 
     def update(self):
         while self.event.wait():
@@ -101,6 +104,7 @@ class BaTMan:
                 self.pending.update({symbol: xone})
                 self.alive.update({symbol: xone})
                 self.event.set()
+                return xone.getvalues()
         except (AssertionError, ValueError) as e:
             return e
 
@@ -108,7 +112,7 @@ class BaTMan:
         try:
             cerebro = bt.Cerebro()
 
-            store = bt.stores.IBStore(port=7497, _debug=False)
+            store = bt.stores.IBStore(port=7497)
 
             datas = [store.getdata(dataname=stk, rtbar=True, backfill_start=False) for stk in contracts]
 
@@ -124,4 +128,5 @@ class BaTMan:
             cerebro.run()
 
         except Exception as e:
-            print(e)
+            exc_info = sys.exc_info()
+            traceback.print_exception(*exc_info)
