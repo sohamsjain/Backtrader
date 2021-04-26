@@ -7,13 +7,13 @@ from typing import Dict
 import backtrader as bt
 import pandas as pd
 
-from grid.db import Db
-from grid.mysizer import MySizer
-from grid.sheets import Sheets
-from grid.strategy import Grid
-from grid.workstation import WorkStation
-from grid.xone import *
+from db import Db
+from mysizer import MySizer
 from mytelegram.raven import Raven, raven_json_path, raven_token
+from sheets import Sheets
+from strategy import Grid
+from workstation import WorkStation
+from xone import *
 
 pending, _open, closed = 'pending', 'open', 'closed'
 xonetypes = {pending, _open, closed}

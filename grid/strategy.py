@@ -3,7 +3,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import backtrader as bt
 
-from grid.xone import *
+from xone import *
 
 
 class Grid(bt.Strategy):

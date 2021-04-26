@@ -3,8 +3,8 @@ from threading import Thread
 from time import sleep
 from typing import Dict
 
-from grid.util import *
 from mygoogle.sprint import *
+from util import *
 
 pending, _open, closed = 'pending', 'open', 'closed'
 xonetypes = {pending, _open, closed}
