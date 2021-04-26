@@ -67,13 +67,13 @@ class Grid(bt.Strategy):
         pass
 
     def notify_data(self, data, status, *args, **kwargs):
-        pass
+        print(data._dataname, data._getstatusname(status))
 
     def notify_store(self, msg, *args, **kwargs):
-        pass
+        print(msg)
 
     def notify_cashvalue(self, cash, value):
-        pass
+        print("Cash: ", cash, "Value", value)
 
     def notify_fund(self, cash, value, fundvalue, shares):
         pass

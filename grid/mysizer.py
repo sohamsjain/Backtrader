@@ -11,7 +11,7 @@ class MySizer(bt.Sizer):
 
     def _getsizing(self, comminfo, cash, data, isbuy):
 
-        value = self.broker.value
+        value = self.broker.get_value()
         prisk = (self.p.pct_risk / 100) * value
         x = self.strategy.manager.alive[data._dataname]
         riskqty = abs(int((prisk / x.rpu) / self.p.lot_size)) * self.p.lot_size
