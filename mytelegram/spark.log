@@ -1,0 +1,302 @@
+DEBUG:telegram.ext.dispatcher:Setting singleton dispatcher as <telegram.ext.dispatcher.Dispatcher object at 0x058E98D0>
+INFO:apscheduler.scheduler:Scheduler started
+DEBUG:apscheduler.scheduler:Looking for jobs to run
+DEBUG:telegram.bot:Entering: get_me
+DEBUG:apscheduler.scheduler:No jobs; waiting until a job is added
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getMe HTTP/1.1" 200 187
+DEBUG:telegram.bot:{'id': 1378229252, 'first_name': 'Spark', 'is_bot': True, 'username': 'sparkupbot', 'can_join_groups': True, 'can_read_all_group_messages': False, 'supports_inline_queries': True}
+DEBUG:telegram.bot:Exiting: get_me
+DEBUG:telegram.ext.updater:Bot:1378229252:dispatcher - started
+DEBUG:telegram.ext.updater:Bot:1378229252:updater - started
+DEBUG:telegram.ext.updater:Waiting for Dispatcher and polling to start
+DEBUG:telegram.ext.updater:Updater thread started (polling)
+DEBUG:telegram.ext.updater:Start network loop retry bootstrap del webhook
+DEBUG:telegram.bot:Entering: delete_webhook
+DEBUG:telegram.ext.dispatcher:Dispatcher started
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/deleteWebhook HTTP/1.1" 200 68
+DEBUG:telegram.bot:True
+DEBUG:telegram.bot:Exiting: delete_webhook
+DEBUG:telegram.ext.updater:Bootstrap done
+DEBUG:telegram.ext.updater:Start network loop retry getting Updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 409 143
+ERROR:telegram.ext.updater:Error while getting Updates: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+DEBUG:telegram.ext.dispatcher:Processing Update: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 298
+DEBUG:telegram.bot:Getting updates: [444209180]
+DEBUG:telegram.bot:[<telegram.update.Update object at 0x06AFB1F0>]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Entering: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Starting new HTTPS connection (2): api.telegram.org
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/sendChatAction HTTP/1.1" 200 25
+DEBUG:telegram.bot:True
+DEBUG:telegram.bot:Exiting: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Entering: send_message
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/sendMessage HTTP/1.1" 200 446
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:{'message_id': 1940, 'date': 1616071487, 'chat': {'id': 975198388, 'type': 'private', 'first_name': 'Soham', 'last_name': 'Jain'}, 'text': "Unfortunately, I can't help you with that. Allow me to redirect you to Soham.\nHere you go!\n\nhttps://api.whatsapp.com/send?phone=919619479104&text=%F0%9F%90%BB", 'entities': [{'type': 'url', 'offset': 92, 'length': 66}], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 1378229252, 'first_name': 'Spark', 'is_bot': True, 'username': 'sparkupbot'}}
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Exiting: send_message
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 298
+DEBUG:telegram.bot:Getting updates: [444209181]
+DEBUG:telegram.bot:[<telegram.update.Update object at 0x070B4170>]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Entering: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/sendChatAction HTTP/1.1" 200 25
+DEBUG:telegram.bot:True
+DEBUG:telegram.bot:Exiting: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Entering: send_message
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/sendMessage HTTP/1.1" 200 446
+DEBUG:telegram.bot:{'message_id': 1942, 'date': 1616071582, 'chat': {'id': 975198388, 'type': 'private', 'first_name': 'Soham', 'last_name': 'Jain'}, 'text': "Unfortunately, I can't help you with that. Allow me to redirect you to Soham.\nHere you go!\n\nhttps://api.whatsapp.com/send?phone=919619479104&text=%F0%9F%93%88", 'entities': [{'type': 'url', 'offset': 92, 'length': 66}], 'caption_entities': [], 'photo': [], 'new_chat_members': [], 'new_chat_photo': [], 'delete_chat_photo': False, 'group_chat_created': False, 'supergroup_chat_created': False, 'channel_chat_created': False, 'from': {'id': 1378229252, 'first_name': 'Spark', 'is_bot': True, 'username': 'sparkupbot'}}
+DEBUG:telegram.bot:Exiting: send_message
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 298
+DEBUG:telegram.bot:Getting updates: [444209182]
+DEBUG:telegram.bot:[<telegram.update.Update object at 0x070B4C50>]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.bot:Entering: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/sendChatAction HTTP/1.1" 200 25
+DEBUG:telegram.bot:True
+DEBUG:telegram.bot:Exiting: send_chat_action
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates
+DEBUG:telegram.vendor.ptb_urllib3.urllib3.connectionpool:https://api.telegram.org:443 "POST /bot1378229252:AAFcsFEUnEDNmi_oK5V_gajHrdb5rIkznoo/getUpdates HTTP/1.1" 200 23
+DEBUG:telegram.bot:No new updates found.
+DEBUG:telegram.bot:[]
+DEBUG:telegram.bot:Exiting: get_updates
+DEBUG:telegram.bot:Entering: get_updates

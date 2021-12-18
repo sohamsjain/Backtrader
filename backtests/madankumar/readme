@@ -1,0 +1,232 @@
+
+report.xlsx:
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min5)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 0
+    From: 2019-01-01
+    To: 2020-08-20
+    observe: nifty futures
+    acton: nifty futures
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report2.xlsx(report.xlsx):
+
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report3.xlsx(report2.xlsx):
+
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 0
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty futures
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report4.xlsx:
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 0
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty spot**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report5.xlsx(report2.xlsx):
+
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty futures**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report6.xlsx:
+
+                  /
+      LPH       --- LPH break
+      /\        /
+     /  \      /
+    /    \    / <- LPL Occur
+          \  /
+           \/
+           LPL
+
+    Timeframe: min5
+    Entry: LPH Break only after LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty futures**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report7.xlsx:
+
+               /
+        LPH  --- LPH Break
+         /\  /
+        /  \/
+
+    Timeframe: min5
+    Entry: LPH Break without LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty futures**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report8.xlsx:
+
+                  /
+      LPH       --- LPH break
+      /\        /
+     /  \      /
+    /    \    / <- LPL Occur
+          \  /
+           \/
+           LPL
+
+    Timeframe: min5
+    Entry: LPH Break only after LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2011-01-03**
+    To: 2020-08-20
+    observe: nifty futures**
+    acton: nifty futures**
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report9.xlsx:
+
+                  /
+      LPH       --- LPH break
+      /\        /
+     /  \      /
+    /    \    / <- LPL Occur
+          \  /
+           \/
+           LPL
+
+    Timeframe: min5
+    Entry: LPH Break only after LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty futures**
+
+    Identical to report6.xlsx just added ATR of pivot tf at entry**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report10.xlsx:
+
+                  /
+      LPH       --- LPH break
+      /\        /
+     /  \      /
+    /    \    / <- LPL Occur
+          \  /
+           \/
+           LPL
+
+    Timeframe: min5
+    Entry: LPH Break only after LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty spot**
+    acton: nifty spot**
+
+    Identical to report6.xlsx just added ATR of pivot tf at entry**
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report11.xlsx:
+
+                  /
+      LPH       --- LPH break
+      /\        /
+     /  \      /
+    /    \    / <- LPL Occur
+          \  /
+           \/
+           LPL
+
+    Timeframe: min5
+    Entry: LPH Break only after LPL Occur
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+              OR Closed against entry (min1)
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty futures**
+    acton: nifty futures**
+
+    Identical to report6.xlsx just added ATR of pivot tf at entry**

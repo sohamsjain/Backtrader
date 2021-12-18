@@ -47,7 +47,7 @@ class GoogleSprint:
     def open_by_id(self, _id):
         return self.drive.CreateFile({'id': _id})
 
-    def create_sheet(self, name, folder_id):
+    def create_sheet(self, name, folder_id=None):
         return self.gs.create(name, folder_id)
 
     @staticmethod

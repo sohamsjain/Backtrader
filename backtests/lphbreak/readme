@@ -1,0 +1,28 @@
+
+report.xlsx:
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 0
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty futures
+    acton: nifty futures
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+report2.xlsx:
+    Timeframe: min5
+    Entry: LPH Break
+    Stoploss: .03% of Nifty
+              OR prev spl
+              OR Intraday SquareOff
+    Trail: HH,HL,HC -->> PL
+    TrailOff: 40**
+    From: 2019-01-15
+    To: 2020-08-20
+    observe: nifty futures
+    acton: nifty futures
